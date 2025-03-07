@@ -56,7 +56,7 @@ def show_game_over(text):
     time.sleep(6)
 
 # Inicializa a engine personalizada
-engine_path = "../engine/engine_fourth/target/release/engine_fourth" 
+engine_path = "../engine/engine_sixth/target/release/engine_sixth" 
 engine = subprocess.Popen(
     [engine_path],
     stdin=subprocess.PIPE,
@@ -116,10 +116,19 @@ while running:
                     move = chess.Move(selected_square, square, promotion=chess.QUEEN)
                 else:
                     move = chess.Move(selected_square, square)
+                
                 if move in board.legal_moves:
                     board.push(move)
                     selected_square = None
-    
+                    
+                    # Redesenha o tabuleiro para mostrar o movimento do jogador
+                    draw_board()
+                    draw_pieces(board)
+                    pygame.display.flip()
+                    
+                    # Adiciona um delay antes do movimento da IA
+                    time.sleep(0.4) 
+                    
                     if not board.is_game_over():                    
                         ai_move = get_ai_move(board)
                         if ai_move:
